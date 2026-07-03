@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arreglos & Regalos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      background: #f9f3f0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(135deg, #ffdde1, #f9d0d5, #f7c9d0, #fbc4d0, #fec9d6);
+      background-size: 300% 300%;
+      animation: gradientFlow 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1300px;
+      margin: 0 auto;
+      background: rgba(255, 248, 245, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 48px;
+      padding: 30px 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      color: #4a2c2c;
+      letter-spacing: -0.3px;
+    }
+
+    .header-con-foto {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      background: #d4a0a0;
+      min-height: 200px;
+      box-shadow: 0 8px 24px rgba(130, 70, 70, 0.15);
+    }
+
+    .header-con-foto .fondo-header {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+      object-fit: cover;
+      display: block;
+      background: #dbb8b0;
+    }
+
+    .header-con-foto .contenido-encima {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 30px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(2px);
+      text-align: center;
+    }
+
+    .header-con-foto .contenido-encima h1 {
+      font-size: 3.2rem;
+      color: white;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      margin-bottom: 4px;
+      background: none;
+      -webkit-text-fill-color: white;
+      background: transparent;
+    }
+
+    .header-con-foto .contenido-encima .subtitulo-header {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      letter-spacing: 1px;
+    }
+
+    .fila-mapa-foto {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 12px;
+      margin-bottom: 10px;
+      align-items: stretch;
+    }
+
+    .fila-mapa-foto > * {
+      flex: 1 1 280px;
+      min-width: 200px;
+    }
+
+    .ubicacion-cuadrado {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 240, 235, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(150, 80, 80, 0.08);
+      border: 0 !important;
+      outline: 0 !important;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .ubicacion-cuadrado:hover {
+      background: rgba(255, 232, 225, 0.85);
+      box-shadow: 0 8px 18px rgba(150, 80, 80, 0.12);
+    }
+
+    .ubicacion-mapa {
+      width: 100%;
+      height: 180px;
+      border: 0;
+      display: block;
+    }
+
+    .ubicacion-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px 12px 16px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ubicacion-info .direccion {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: #3d2424;
+      font-size: 0.9rem;
+    }
+
+    .ubicacion-info .direccion i {
+      color: #b35e5e;
+      font-size: 1rem;
+    }
+
+    .ubicacion-info .ubicacion-enlace {
+      color: #b35e5e;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.8rem;
+      background: rgba(255, 215, 215, 0.3);
+      padding: 4px 14px;
+      border-radius: 40px;
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+
+    .ubicacion-info .ubicacion-enlace:hover {
+      background: #b35e5e;
+      color: white;
+    }
+
+    .foto-lateral {
+      border-radius: 24px;
+      overflow: hidden;
+      flex: 1;
+      min-height: 180px;
+      background: #e8ccc4;
+      box-shadow: 0 4px 12px rgba(150, 80, 80, 0.08);
+    }
+
+    .foto-lateral img {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-crear-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    .btn-crear {
+      background: #d48b8b;
+      border: 0 !important;
+      outline: 0 !important;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 14px 34px;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(180, 80, 80, 0.2);
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-crear:hover {
+      transform: scale(1.04) translateY(-4px);
+      background: #c57777;
+      box-shadow: 0 16px 28px rgba(170, 70, 70, 0.3);
+    }
+
+    .grid-ramos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      margin: 30px 0 20px;
+    }
+
+    .card-ramo {
+      background: rgba(255, 245, 242, 0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 32px;
+      padding: 16px 14px 20px;
+      box-shadow: 0 10px 20px rgba(130, 70, 70, 0.08);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    .card-ramo:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px rgba(150, 80, 80, 0.15);
+      background: rgba(255, 240, 235, 0.8);
+    }
+
+    .card-ramo img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 24px;
+      background: #fce2dc;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      border: 0 !important;
+      outline: 0 !important;
+      max-height: 200px;
+    }
+
+    .card-ramo h3 {
+      margin: 10px 0 4px;
+      font-size: 1.1rem;
+      line-height: 1.3;
+    }
+
+    .card-ramo .precio {
+      font-weight: 700;
+      color: #a14242;
+      font-size: 1.2rem;
+      background: rgba(255, 215, 215, 0.4);
+      padding: 2px 16px;
+      border-radius: 40px;
+      margin: 4px 0 10px;
+      display: inline-block;
+    }
+
+    .btn-pedir {
+      background: #25D366;
+      border: 0 !important;
+      outline: 0 !important;
+      color: white;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 60px;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 150px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-pedir:hover {
+      background: #1fa855;
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(37, 211, 102, 0.3);
+    }
+
+    #creadorPersonalizado {
+      display: none;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 0 !important;
+    }
+
+    #creadorPersonalizado.activo {
+      display: block;
+    }
+
+    .accordion {
+      background: rgba(255, 240, 235, 0.4);
+      backdrop-filter: blur(3px);
+      border-radius: 28px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    .accordion-header {
+      background: rgba(255, 232, 225, 0.5);
+      padding: 18px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #3d2424;
+      transition: 0.2s;
+      user-select: none;
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    .accordion-header:hover {
+      background: rgba(255, 220, 210, 0.6);
+    }
+
+    .accordion-header i {
+      transition: transform 0.3s ease;
+      color: #a55a5a;
+    }
+
+    .accordion-header.abierto i {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 20px;
+      background: rgba(255, 248, 245, 0.2);
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    .accordion-content.abierto {
+      max-height: 800px;
+      padding: 20px 20px 25px;
+    }
+
+    .sub-categoria {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .item-img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.15s;
+      background: #f7ddd6;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+      border: 0 !important;
+      outline: 0 !important;
+      flex-shrink: 0;
+    }
+
+    .item-img.seleccionado {
+      outline: 4px solid #b35e5e;
+      outline-offset: 2px;
+      transform: scale(1.04);
+      box-shadow: 0 0 0 3px #ffdbd0;
+    }
+
+    .subir-imagen-area {
+      background: rgba(242, 227, 222, 0.5);
+      border-radius: 30px;
+      padding: 20px 16px;
+      margin: 10px 0 5px;
+      border: 0 !important;
+      outline: 0 !important;
+      text-align: center;
+    }
+
+    .subir-imagen-area input[type="file"] {
+      display: block;
+      margin: 10px auto;
+      font-size: 0.85rem;
+      background: #ffefea;
+      padding: 8px 12px;
+      border-radius: 40px;
+      border: 0 !important;
+      outline: 0 !important;
+      width: 100%;
+      max-width: 240px;
+    }
+
+    .aviso-fondo {
+      background: #ffead1;
+      padding: 6px 14px;
+      border-radius: 50px;
+      color: #7a4d3b;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-top: 6px;
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    .btn-pedir-personalizado {
+      background: #b35e5e;
+      border: 0 !important;
+      outline: 0 !important;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 14px 30px;
+      border-radius: 80px;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(160, 70, 70, 0.2);
+      transition: 0.2s;
+      margin-top: 20px;
+    }
+
+    .btn-pedir-personalizado:hover {
+      background: #9e4b4b;
+      transform: scale(1.02);
+    }
+
+    .fecha-input {
+      background: rgba(255, 240, 235, 0.7);
+      border: 0 !important;
+      outline: 0 !important;
+      border-radius: 60px;
+      padding: 12px 22px;
+      font-size: 1rem;
+      margin: 8px 0;
+      width: 100%;
+      max-width: 260px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .modal-fecha {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-fecha.activo {
+      display: flex;
+    }
+
+    .modal-contenido {
+      background: white;
+      border-radius: 32px;
+      padding: 35px 30px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .modal-contenido h3 {
+      margin-bottom: 15px;
+      color: #4a2c2c;
+    }
+
+    .modal-contenido input[type="date"] {
+      width: 100%;
+      padding: 14px 20px;
+      border: 2px solid #e8d5d0;
+      border-radius: 60px;
+      font-size: 1rem;
+      margin: 10px 0 20px;
+      background: #fdf8f6;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .modal-botones {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .modal-botones button {
+      padding: 12px 30px;
+      border: 0;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .btn-modal-confirmar {
+      background: #25D366;
+      color: white;
+    }
+
+    .btn-modal-confirmar:hover {
+      background: #1fa855;
+      transform: scale(1.03);
+    }
+
+    .btn-modal-cancelar {
+      background: #e8d5d0;
+      color: #4a2c2c;
+    }
+
+    .btn-modal-cancelar:hover {
+      background: #dcc4be;
+    }
+
+    .accesorios-info {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(255, 215, 215, 0.2);
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: #5a3a3a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .accesorios-info .badge-accesorio {
+      background: rgba(179, 94, 94, 0.15);
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      color: #7a3a3a;
+    }
+
+    @media (max-width: 900px) {
+      .grid-ramos {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 18px;
+      }
+      .card-ramo img {
+        max-height: 160px;
+      }
+      .card-ramo h3 {
+        font-size: 1rem;
+      }
+      .card-ramo .precio {
+        font-size: 1.1rem;
+        padding: 2px 14px;
+      }
+      .btn-pedir {
+        font-size: 0.9rem;
+        padding: 8px 14px;
+        max-width: 130px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .content-wrapper {
+        padding: 20px 15px;
+        border-radius: 32px;
+      }
+      .header-con-foto .contenido-encima h1 {
+        font-size: 2.2rem;
+      }
+      .header-con-foto .contenido-encima .subtitulo-header {
+        font-size: 0.9rem;
+      }
+      .fila-mapa-foto {
+        flex-direction: column;
+      }
+      .fila-mapa-foto > * {
+        flex: 1 1 auto;
+      }
+      .ubicacion-mapa {
+        height: 150px;
+      }
+      .foto-lateral {
+        min-height: 150px;
+      }
+      .foto-lateral img {
+        min-height: 150px;
+      }
+      .btn-crear {
+        font-size: 1rem;
+        padding: 12px 24px;
+        width: 100%;
+        justify-content: center;
+      }
+      .accordion-header {
+        font-size: 1rem;
+        padding: 14px 18px;
+      }
+      .grid-ramos {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 14px;
+      }
+      .card-ramo {
+        padding: 12px 10px 16px;
+        border-radius: 24px;
+      }
+      .card-ramo img {
+        max-height: 140px;
+        border-radius: 18px;
+      }
+      .card-ramo h3 {
+        font-size: 0.9rem;
+        margin: 8px 0 2px;
+      }
+      .card-ramo .precio {
+        font-size: 1rem;
+        padding: 2px 12px;
+        margin: 2px 0 8px;
+      }
+      .btn-pedir {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        max-width: 110px;
+      }
+      .item-img {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+      }
+      .sub-categoria {
+        gap: 10px;
+      }
+      .flex-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .fecha-input {
+        max-width: 100%;
+      }
+      .btn-pedir-personalizado {
+        font-size: 1rem;
+        padding: 12px 24px;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 10px;
+      }
+      .content-wrapper {
+        padding: 15px 10px;
+        border-radius: 24px;
+      }
+      .header-con-foto .contenido-encima h1 {
+        font-size: 1.6rem;
+      }
+      .header-con-foto .contenido-encima .subtitulo-header {
+        font-size: 0.75rem;
+      }
+      .header-con-foto {
+        min-height: 150px;
+        border-radius: 20px;
+      }
+      .header-con-foto .fondo-header {
+        min-height: 150px;
+      }
+      .grid-ramos {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 12px;
+        margin: 20px 0 12px;
+      }
+      .card-ramo {
+        padding: 10px 8px 14px;
+        border-radius: 20px;
+      }
+      .card-ramo img {
+        max-height: 120px;
+        border-radius: 14px;
+      }
+      .card-ramo h3 {
+        font-size: 0.8rem;
+        margin: 6px 0 2px;
+      }
+      .card-ramo .precio {
+        font-size: 0.9rem;
+        padding: 2px 10px;
+        margin: 2px 0 6px;
+      }
+      .btn-pedir {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+        max-width: 100px;
+        gap: 4px;
+      }
+      .btn-crear {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+      }
+      .accordion-header {
+        font-size: 0.9rem;
+        padding: 12px 14px;
+      }
+      .accordion-content.abierto {
+        padding: 14px 14px 18px;
+      }
+      .item-img {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+      }
+      .sub-categoria {
+        gap: 8px;
+      }
+      .ubicacion-info .direccion {
+        font-size: 0.75rem;
+      }
+      .ubicacion-info .ubicacion-enlace {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+      }
+      .ubicacion-mapa {
+        height: 120px;
+      }
+      .foto-lateral {
+        min-height: 120px;
+      }
+      .foto-lateral img {
+        min-height: 120px;
+      }
+      .btn-pedir-personalizado {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+      }
+      .subir-imagen-area input[type="file"] {
+        max-width: 100%;
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .grid-ramos {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 10px;
+      }
+      .card-ramo img {
+        max-height: 100px;
+      }
+      .card-ramo h3 {
+        font-size: 0.7rem;
+      }
+      .card-ramo .precio {
+        font-size: 0.8rem;
+        padding: 1px 8px;
+      }
+      .btn-pedir {
+        font-size: 0.65rem;
+        padding: 5px 8px;
+        max-width: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="content-wrapper">
+
+    <div class="header-con-foto">
+      <img 
+        class="fondo-header" 
+        src="fondo.png" 
+        alt="Flores y regalos" 
+        loading="lazy"
+      />
+      <div class="contenido-encima">
+        <h1><i class="fas fa-gift" style="margin-right: 12px;"></i>Arreglos & Flores</h1>
+        <span class="subtitulo-header">✨ Regalos únicos · Hechos con amor</span>
+      </div>
+    </div>
+
+    <div class="fila-mapa-foto">
+      <div class="ubicacion-cuadrado">
+        <iframe 
+          class="ubicacion-mapa"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.142771375518!2d-67.5588476!3d10.2072385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c3805428bd1ab7f%3A0x8d4b4a5c5f0e2e3d!2sAv.%20Venezuela%2C%20Maracay%2C%20Aragua%2C%20Venezuela!5e0!3m2!1ses!2sve!4v1699999999999!5m2!1ses!2sve" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div class="ubicacion-info">
+          <span class="direccion">
+            <i class="fas fa-map-pin"></i>
+            Av. Venezuela · Local 5
+          </span>
+          <a href="https://www.google.com/maps/search/?api=1&query=10.207239,-67.556442" target="_blank" class="ubicacion-enlace">
+            <i class="fas fa-external-link-alt"></i> Abrir en Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="foto-lateral">
+        <img 
+          src="image.png" 
+          alt="Arreglo floral" 
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div class="btn-crear-wrapper">
+      <button class="btn-crear" id="btnMostrarCreador">
+        <i class="fas fa-plus-circle"></i> Crear arreglo personalizado
+      </button>
+    </div>
+
+    <h2 style="margin-bottom: 6px; color: #4f2c2c; margin-top: 30px;">✨ Arreglos destacados</h2>
+    <div class="grid-ramos" id="galeriaRamos"></div>
+
+    <div id="creadorPersonalizado">
+      <h2 style="color: #472424; display: flex; gap: 10px; margin-bottom: 20px;">
+        <i class="fas fa-paint-brush"></i> Arma tu arreglo a medida
+      </h2>
+
+      <div class="accordion">
+        <div class="accordion-header abierto" data-target="base">
+          <span>📦 Base</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content abierto" id="acordeonBase">
+          <div class="sub-categoria" id="subBase"></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-header" data-target="color">
+          <span>🎨 Color</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content" id="acordeonColor">
+          <div class="sub-categoria" id="subColor"></div>
+          <div style="margin-top: 18px;">
+            <p style="font-weight: 600; color: #663b3b; margin-bottom: 6px;">Accesorios del color seleccionado:</p>
+            <div class="sub-categoria" id="subAccesorios"></div>
+            <div class="accesorios-info" id="accesoriosSeleccionados">
+              <span style="color: #8a5a5a; font-style: italic;">Selecciona un color primero</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-header" data-target="objeto">
+          <span>🧸 Objeto principal</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content" id="acordeonObjeto">
+          <div class="sub-categoria" id="subObjeto"></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-header" data-target="personal">
+          <span>✨ Algo al gusto</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content" id="acordeonPersonal">
+          <div class="subir-imagen-area">
+            <p><i class="fas fa-upload"></i> Sube tu imagen </p>
+            <input type="file" accept="image/*" id="inputImagenPersonal" />
+            <div class="aviso-fondo"><i class="fas fa-info-circle"></i> </div>
+            <div id="previewPersonal" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-row" style="justify-content: space-between; flex-wrap: wrap; margin-top: 15px;">
+        <div>
+          <label style="font-weight: 600; color: #452b2b;"><i class="far fa-calendar-alt"></i> Fecha de entrega:</label>
+          <input type="date" class="fecha-input" id="fechaPersonalizada" />
+        </div>
+        <button class="btn-pedir-personalizado" id="btnPedirPersonalizado"><i class="fab fa-whatsapp"></i> Pedir por WhatsApp</button>
+      </div>
+      <p style="margin-top: 12px; color: #5d3a3a; background: #fae3dd; padding: 8px 20px; border-radius: 60px; display: inline-block; border: 0 !important; outline: 0 !important;">
+        <i class="fas fa-asterisk" style="color: #b35e5e;"></i>
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-fecha" id="modalFecha">
+    <div class="modal-contenido">
+      <h3>📅 Fecha de entrega</h3>
+      <p style="color: #6a4a4a; margin-bottom: 10px;">Selecciona la fecha para tu pedido</p>
+      <input type="date" id="fechaModal" />
+      <div class="modal-botones">
+        <button class="btn-modal-cancelar" id="btnModalCancelar">Cancelar</button>
+        <button class="btn-modal-confirmar" id="btnModalConfirmar">Confirmar pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   
+    var WHATSAPP_NUMBER = '584127655700';
+    
+    function getWhatsAppLink(mensaje) {
+      return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(mensaje);
+    }
+
+    // ===== ARREGLOS FIJOS =====
+    var ramos = [
+      { nombre: "Arreglo con Funko", precio: 450, img: "arreglo pequeño con funko.jpg" },
+      { nombre: "Caja Corazon De Flores y Chocolates", precio: 380, img: "caja corazon de rosas y chocolates.jpg" },
+      { nombre: "Ramo de Flores Mediano ", precio: 590, img: "ramo de 11 rosas con coronita.jpg" },
+      { nombre: "Ramo de Flores Con Peluche Pequeño y Luces", precio: 320, img: "ramo de kuromi mediano con luces.jpg" },
+      { nombre: "Arreglo Pequeño Con Peluche y Rosa", precio: 520, img: "arreglo pequeño con peluche, 1 rosa y globo grande.jpg" },
+      { nombre: "Arreglo de Spiderman", precio: 270, img: "arreglo de spiderman.jpg" },
+      { nombre: "Arreglo Tematico de Mario Bross", precio: 375, img: "arreglo de mario.jpg" },
+      { nombre: "Arreglo De Peluche Con Globo Grande", precio: 280, img: "arreglo de peluche con globo grande.jpg" },
+      { nombre: "Arreglo de Mini", precio: 278, img: "arreglo de mini con dulces y globo grande.jpg" },
+      { nombre: "Arreglo Mediano de Graduacion", precio: 250, img: "arreglo de graduacion.jpg" }, 
+      { nombre: "Arreglo Pequeño Con Peluche de Stitch y Tres Flores", precio: 140, img: "arreglo de stitch azul con 3 flores.jpg" }, 
+      { nombre: "Arreglo Pequeño de Stitch Con Dos Rosas", precio: 320, img: "arreglo de stitch con 2 rosas.jpg" },
+      { nombre: "Arreglo Mediano Con Peluche Y Dulces", precio: 500, img: "arreglo mediano con globo grande y dulces.jpg" },
+      { nombre: "Arreglo Mediano Con Peluche y Dulces", precio: 500, img: "arreglo mediano con peluche mediano y globo grande.jpg" },
+      { nombre: "Arreglo Pequeño Con Peluche", precio: 170, img: "arreglo pequeño con peluche.jpg" }, 
+      { nombre: "Ramo de Flores Mediano", precio: 150, img: "ramo de flores mediano.jpg" },
+      { nombre: "Ramo de Rosas Con Girasol", precio: 170, img: "ramo de rosas con un girasol.jpg" }, 
+      { nombre: "Ramo De Flores Pequeño", precio: 150, img: "ramo pequeño de flores.jpg" },
+      { nombre: "Arreglo De Graduacion Pequeño Con Peluche", precio: 170, img: "arreglo de graduacio pequeño con peluche, dulces y groblos grandes.jpg" },
+      { nombre: "Arreglo Sencillos De Dulces", precio: 270, img: "arreglo de globos grandes con dulces.jpg" },
+      { nombre: "Arreglo De Dulces Pequeño", precio: 190, img: "arreglo de dulces.jpg" },
+      { nombre: "Arreglo Mediano De Capibara", precio: 370, img: "arreglo de capibara con dulces y globo grande.jpg" },
+      { nombre: "Ramo de Rosas Con Peluche", precio: 350, img: "ramo con peluche pequeño.jpg" },
+      { nombre: "Ramo De Graduacion con Girasol", precio: 300, img: "ramo de graduacion con girasol.webp" },
+      { nombre: "Ramo de Stitch", precio: 375, img: "ramo de stitch.webp" },
+    ];
+
+    var ramoSeleccionado = null;
+
+    function renderRamos() {
+      var galeria = document.getElementById('galeriaRamos');
+      galeria.innerHTML = '';
+      
+      for (var i = 0; i < ramos.length; i++) {
+        var r = ramos[i];
+        var card = document.createElement('div');
+        card.className = 'card-ramo';
+        card.innerHTML = `
+          <img src="${r.img}" alt="${r.nombre}" loading="lazy" />
+          <h3>${r.nombre}</h3>
+          <span class="precio">$${r.precio}</span>
+          <button class="btn-pedir" data-idx="${i}"><i class="fab fa-whatsapp"></i> Pedir</button>
+        `;
+        galeria.appendChild(card);
+      }
+    }
+
+    function abrirModalFecha(idx) {
+      ramoSeleccionado = ramos[idx];
+      
+      if (!ramoSeleccionado) {
+        alert('Error: No se pudo identificar el arreglo.');
+        return;
+      }
+      
+      var hoy = new Date();
+      var fechaMin = new Date(hoy);
+      fechaMin.setDate(hoy.getDate() + 2);
+      
+      var year = fechaMin.getFullYear();
+      var month = String(fechaMin.getMonth() + 1).padStart(2, '0');
+      var day = String(fechaMin.getDate()).padStart(2, '0');
+      
+      var fechaInput = document.getElementById('fechaModal');
+      fechaInput.min = year + '-' + month + '-' + day;
+      fechaInput.value = year + '-' + month + '-' + day;
+      
+      document.getElementById('modalFecha').classList.add('activo');
+    }
+
+    function confirmarPedido() {
+      var fechaInput = document.getElementById('fechaModal');
+      var fecha = fechaInput.value;
+      
+      if (!fecha) {
+        alert('Por favor, selecciona una fecha de entrega.');
+        return;
+      }
+      
+      var mensaje = 'Hola, quiero pedir el arreglo "' + ramoSeleccionado.nombre + '". Imagen: ' + ramoSeleccionado.img + '. Fecha de entrega: ' + fecha + '. ¿Cuánto costaría?';
+      
+      var url = getWhatsAppLink(mensaje);
+      
+      document.getElementById('modalFecha').classList.remove('activo');
+      window.open(url, '_blank');
+    }
+
+    function manejarPedidoArregloFijo(event) {
+      var boton = event.target.closest('.btn-pedir');
+      if (!boton) return;
+      
+      var idx = parseInt(boton.getAttribute('data-idx'));
+      if (isNaN(idx) || idx < 0 || idx >= ramos.length) {
+        alert('Error: No se pudo identificar el arreglo.');
+        return;
+      }
+      
+      abrirModalFecha(idx);
+    }
+
+    // ===== DATOS CREADOR =====
+    var bases = [
+      { nombre: 'Caja', img: 'caja.jpg' },
+      { nombre: 'Ramo', img: 'ramo.jpg' },
+    ];
+
+    var coloresData = [
+      { nombre: 'Rojo', img: 'rojo.jpg', accesorios: ['globos rojos.png', 'rosa roja.png', 'girasol.webp'] },
+      { nombre: 'Rosa', img: 'rosado.webp', accesorios: ['globos rosados.png', 'rosa rosada.png', 'girasol.webp'] },
+      { nombre: 'Azul', img: 'azul.webp', accesorios: ['globos azules.png', 'rosa azul.png', 'girasol.webp'] },
+      { nombre: 'Verde', img: 'verde.webp', accesorios: ['globos verdes.png', 'rosa verde.png', 'girasol.webp'] },
+      { nombre: 'Amarillo', img: 'amarillo.webp', accesorios: ['globos amarillos.png', 'rosa amarilla.png', 'girasol.webp'] },
+      { nombre: 'Fucsia', img: 'fucsia.webp', accesorios: ['globos fucsia.png', 'rosa fucsia.png', 'girasol.webp'] },
+      { nombre: 'Morado', img: 'morado.webp', accesorios: ['globos morados.png', 'rosa morada.png', 'girasol.webp'] },
+    ];
+
+    var objetos = [
+      { nombre: 'Peluche Grande', img: 'stitch grande.png' },
+      { nombre: 'Peluche Snopy', img: 'peluche de snupi.jpg' },
+      { nombre: 'Peluche de Hello Kitty', img: 'peluche de hello kitty.jpg' },
+      { nombre: 'Maquillaje', img: 'maquillaje.webp' },
+      { nombre: 'Colonias', img: 'perfume.webp' },
+      { nombre: 'Carteras', img: 'cartera.webp' },
+      { nombre: 'Dulces Especificos', img: 'dulces.webp' }
+    ];
+
+    function renderSub(containerId, items, tipo) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var img = document.createElement('img');
+        img.className = 'item-img';
+        img.src = item.img;
+        img.alt = item.nombre || 'item';
+        img.setAttribute('data-tipo', tipo);
+        img.setAttribute('data-nombre', item.nombre || '');
+        
+        // Para accesorios: permitir múltiples selecciones
+        if (tipo === 'accesorio') {
+          img.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('seleccionado');
+            actualizarListaAccesorios();
+          });
+        } else {
+          // Para las otras categorías: selección única
+          img.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var parent = this.parentNode;
+            var imagenes = parent.querySelectorAll('.item-img');
+            for (var j = 0; j < imagenes.length; j++) {
+              imagenes[j].classList.remove('seleccionado');
+            }
+            this.classList.add('seleccionado');
+            if (this.getAttribute('data-tipo') === 'color') {
+              actualizarAccesorios(this.getAttribute('data-nombre'));
+            }
+          });
+        }
+        
+        container.appendChild(img);
+      }
+    }
+
+    function actualizarAccesorios(nombreColor) {
+      var subAcc = document.getElementById('subAccesorios');
+      var color = null;
+      
+      for (var i = 0; i < coloresData.length; i++) {
+        if (coloresData[i].nombre === nombreColor) {
+          color = coloresData[i];
+          break;
+        }
+      }
+      
+      if (!color) {
+        subAcc.innerHTML = '<span style="color:#8a5a5a; font-style:italic;">Selecciona un color</span>';
+        document.getElementById('accesoriosSeleccionados').innerHTML = '<span style="color:#8a5a5a; font-style:italic;">Selecciona un color primero</span>';
+        return;
+      }
+      
+      subAcc.innerHTML = '';
+      for (var i = 0; i < color.accesorios.length; i++) {
+        var url = color.accesorios[i];
+        var img = document.createElement('img');
+        img.className = 'item-img';
+        img.src = url;
+        img.alt = 'accesorio';
+        img.setAttribute('data-tipo', 'accesorio');
+        img.setAttribute('data-nombre', color.accesorios[i].replace('.png', '').replace('.webp', '').replace('.jpg', ''));
+        
+        // Permitir múltiples selecciones en accesorios
+        img.addEventListener('click', function(e) {
+          e.stopPropagation();
+          this.classList.toggle('seleccionado');
+          actualizarListaAccesorios();
+        });
+        
+        subAcc.appendChild(img);
+      }
+      
+      actualizarListaAccesorios();
+    }
+
+    function actualizarListaAccesorios() {
+      var accesoriosContainer = document.getElementById('accesoriosSeleccionados');
+      var seleccionados = document.querySelectorAll('#subAccesorios .item-img.seleccionado');
+      
+      if (seleccionados.length === 0) {
+        accesoriosContainer.innerHTML = '<span style="color:#8a5a5a; font-style:italic;">No hay accesorios seleccionados</span>';
+        return;
+      }
+      
+      var nombres = [];
+      for (var i = 0; i < seleccionados.length; i++) {
+        var nombre = seleccionados[i].getAttribute('data-nombre') || 'Accesorio';
+        nombres.push(nombre);
+      }
+      
+      accesoriosContainer.innerHTML = '✅ <strong>Accesorios seleccionados:</strong> ' + 
+        nombres.map(function(n) { return '<span class="badge-accesorio">' + n + '</span>'; }).join(' ');
+    }
+
+    // ===== FUNCIÓN PARA OBTENER EL NOMBRE DEL ELEMENTO SELECCIONADO =====
+    function obtenerNombreSeleccionado(containerId) {
+      var container = document.getElementById(containerId);
+      if (!container) return null;
+      
+      var seleccionados = container.querySelectorAll('.item-img.seleccionado');
+      if (seleccionados.length === 0) return null;
+      
+      return seleccionados[0].getAttribute('data-nombre');
+    }
+
+    // ===== FUNCIÓN PARA OBTENER ACCESORIOS SELECCIONADOS =====
+    function obtenerAccesoriosSeleccionados() {
+      var subAcc = document.getElementById('subAccesorios');
+      if (!subAcc) return [];
+      
+      var seleccionados = subAcc.querySelectorAll('.item-img.seleccionado');
+      var nombres = [];
+      for (var i = 0; i < seleccionados.length; i++) {
+        var nombre = seleccionados[i].getAttribute('data-nombre');
+        if (nombre) {
+          nombres.push(nombre);
+        }
+      }
+      return nombres;
+    }
+
+    // ===== FUNCIÓN PARA CONSTRUIR MENSAJE PERSONALIZADO =====
+    function construirMensajePersonalizado(imagenSubida) {
+      var mensaje = '🌸 *PEDIDO PERSONALIZADO* 🌸\n\n';
+      
+      // Base
+      var base = obtenerNombreSeleccionado('subBase');
+      if (base) {
+        mensaje += '📦 *Base:* ' + base + '\n';
+      } else {
+        mensaje += '📦 *Base:* No seleccionada\n';
+      }
+      
+      // Color
+      var color = obtenerNombreSeleccionado('subColor');
+      if (color) {
+        mensaje += '🎨 *Color:* ' + color + '\n';
+      } else {
+        mensaje += '🎨 *Color:* No seleccionado\n';
+      }
+      
+      // Accesorios del color (MÚLTIPLES)
+      var accesorios = obtenerAccesoriosSeleccionados();
+      if (accesorios.length > 0) {
+        mensaje += '✨ *Accesorios:* ' + accesorios.join(', ') + '\n';
+      } else {
+        mensaje += '✨ *Accesorios:* No seleccionados\n';
+      }
+      
+      // Objeto principal
+      var objeto = obtenerNombreSeleccionado('subObjeto');
+      if (objeto) {
+        mensaje += '🧸 *Objeto principal:* ' + objeto + '\n';
+      } else {
+        mensaje += '🧸 *Objeto principal:* No seleccionado\n';
+      }
+      
+      // Imagen subida por el usuario
+      if (imagenSubida) {
+        mensaje += '🖼️ *Imagen extra:* Sí (adjuntada por el usuario)\n';
+      } else {
+        mensaje += '🖼️ *Imagen extra:* No\n';
+      }
+      
+      // Fecha
+      var fecha = document.getElementById('fechaPersonalizada').value || 'No especificada';
+      mensaje += '📅 *Fecha de entrega:* ' + fecha + '\n\n';
+      
+      mensaje += '💬 ¿Cuánto costaría este arreglo?';
+      
+      return mensaje;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderRamos();
+      renderSub('subBase', bases, 'base');
+      renderSub('subColor', coloresData.map(function(c) { return { nombre: c.nombre, img: c.img }; }), 'color');
+      renderSub('subObjeto', objetos, 'objeto');
+      
+      var galeria = document.getElementById('galeriaRamos');
+      if (galeria) {
+        galeria.addEventListener('click', manejarPedidoArregloFijo);
+      }
+      
+      document.getElementById('btnModalConfirmar').addEventListener('click', confirmarPedido);
+      
+      document.getElementById('btnModalCancelar').addEventListener('click', function() {
+        document.getElementById('modalFecha').classList.remove('activo');
+        ramoSeleccionado = null;
+      });
+      
+      document.getElementById('modalFecha').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('activo');
+          ramoSeleccionado = null;
+        }
+      });
+      
+      var headers = document.querySelectorAll('.accordion-header');
+      for (var i = 0; i < headers.length; i++) {
+        headers[i].addEventListener('click', function() {
+          var content = this.nextElementSibling;
+          var isOpen = content.classList.contains('abierto');
+          
+          var allContents = document.querySelectorAll('.accordion-content');
+          for (var j = 0; j < allContents.length; j++) {
+            allContents[j].classList.remove('abierto');
+          }
+          
+          var allHeaders = document.querySelectorAll('.accordion-header');
+          for (var j = 0; j < allHeaders.length; j++) {
+            allHeaders[j].classList.remove('abierto');
+          }
+          
+          if (!isOpen) {
+            content.classList.add('abierto');
+            this.classList.add('abierto');
+          }
+        });
+      }
+      
+      var fechaInput = document.getElementById('fechaPersonalizada');
+      var hoy = new Date();
+      var yyyy = hoy.getFullYear();
+      var mm = String(hoy.getMonth() + 1).padStart(2, '0');
+      var dd = String(hoy.getDate() + 2).padStart(2, '0');
+      fechaInput.value = yyyy + '-' + mm + '-' + dd;
+    });
+
+    var btnMostrar = document.getElementById('btnMostrarCreador');
+    var creadorDiv = document.getElementById('creadorPersonalizado');
+    var visible = false;
+    
+    btnMostrar.addEventListener('click', function() {
+      visible = !visible;
+      if (visible) {
+        creadorDiv.classList.add('activo');
+        this.innerHTML = '<i class="fas fa-times-circle"></i> Cerrar creador';
+        creadorDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        creadorDiv.classList.remove('activo');
+        this.innerHTML = '<i class="fas fa-plus-circle"></i> Crear arreglo personalizado';
+      }
+    });
+
+    document.getElementById('inputImagenPersonal').addEventListener('change', function(e) {
+      var preview = document.getElementById('previewPersonal');
+      preview.innerHTML = '';
+      var file = this.files[0];
+      if (!file) return;
+      
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        var img = document.createElement('img');
+        img.src = ev.target.result;
+        img.style.width = '80px';
+        img.style.height = '80px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '24px';
+        img.style.border = '3px solid #b35e5e';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // ===== BOTÓN PEDIR PERSONALIZADO =====
+    document.getElementById('btnPedirPersonalizado').addEventListener('click', function() {
+      var fileInput = document.getElementById('inputImagenPersonal');
+      var userImg = '';
+      
+      if (fileInput.files && fileInput.files.length > 0) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          userImg = e.target.result;
+          enviarPedidoPersonalizado(userImg);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        enviarPedidoPersonalizado('');
+      }
+    });
+
+    function enviarPedidoPersonalizado(userImg) {
+      var mensaje = construirMensajePersonalizado(userImg);
+      var url = getWhatsAppLink(mensaje);
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
